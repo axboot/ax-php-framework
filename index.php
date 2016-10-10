@@ -1,4 +1,58 @@
 <?php
+//
+// Timezone 설정
+date_default_timezone_set('Asia/Seoul');
+
+$axServerList = array(
+	'ax5sample.dev' => array(
+		'env' => 'development',
+		'baseurl' => 'http://ax5sample.dev',
+		'index_page' => '',
+		'db' => array(
+			'hostname' => getenv('localhost:3308'),
+			'username' => getenv('ax5'),
+			'password' => getenv('LozAfu3EJELO'),
+			'dbdriver' => 'mysqli'
+		)
+	),
+	'ax5-hoksi.cloud.or.kr' => array(
+		'env' => 'development',
+		'baseurl' => 'http://ax5-hoksi.cloud.or.kr',
+		'index_page' => '',
+		'db' => array(
+			'hostname' => getenv('OPENSHIFT_MYSQL_DB_HOST'),
+			'username' => getenv('OPENSHIFT_MYSQL_DB_USERNAME'),
+			'password' => getenv('OPENSHIFT_MYSQL_DB_PASSWORD'),
+			'dbdriver' => 'mysqli'
+		)
+	)
+);
+
+/*
+ *---------------------------------------------------------------
+ * APPLICATION ENVIRONMENT
+ *---------------------------------------------------------------
+ *
+ * You can load different configurations depending on your
+ * current environment. Setting the environment also influences
+ * things like logging and error reporting.
+ *
+ * This can be set to anything, but default usage is:
+ *
+ *     development
+ *     testing
+ *     production
+ *
+ * NOTE: If you change these, also change the error_reporting() code below
+ */
+
+define('ENVIRONMENT', isset($axServerList[$_SERVER['HTTP_HOST']]['env']) ? $axServerList[$_SERVER['HTTP_HOST']]['env'] : 'production');
+define('AXBASEURL', isset($axServerList[$_SERVER['HTTP_HOST']]['baseurl']) ? $axServerList[$_SERVER['HTTP_HOST']]['baseurl'] : 'http://' . $_SERVER['HTTP_HOST']);
+define('AXINDEXPAGE', isset($axServerList[$_SERVER['HTTP_HOST']]['index_page']) ? $axServerList[$_SERVER['HTTP_HOST']]['index_page'] : 'index.php');
+define('AXDB', isset($axServerList[$_SERVER['HTTP_HOST']]['db']) ? $axServerList[$_SERVER['HTTP_HOST']]['db'] : array());
+
+var_dump(AXDB);
+
 /**
  * CodeIgniter
  *
@@ -36,24 +90,6 @@
  * @filesource
  */
 
-/*
- *---------------------------------------------------------------
- * APPLICATION ENVIRONMENT
- *---------------------------------------------------------------
- *
- * You can load different configurations depending on your
- * current environment. Setting the environment also influences
- * things like logging and error reporting.
- *
- * This can be set to anything, but default usage is:
- *
- *     development
- *     testing
- *     production
- *
- * NOTE: If you change these, also change the error_reporting() code below
- */
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
 
 /*
  *---------------------------------------------------------------
