@@ -15,6 +15,6 @@ class System extends Admin_Controller
         $this->auth_group_menu['savAh'] = 'Y';
         ax('set', array('pageName' => '공통코드 관리'));
 
-        $this->load->view('admin/System/system_config_common_code');
+        $this->load->view('admin/system/system_config_common_code');
     }
 }
