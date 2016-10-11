@@ -11,6 +11,8 @@ if(!function_exists('ct')) {
 
         if($tag == 'loginuser') {
             return (is_string($vars) && isset($ci->user_info[$vars]) ? $ci->user_info[$vars] : '');
+        } elseif($tag == 'authgroupmenu') {
+            return (is_string($vars) && isset($ci->auth_group_menu[$vars]) ? $ci->auth_group_menu[$vars] : '');
         } elseif($tag == 'dobody') {
             return $ci->load->get_var('__view_content__');
         } elseif($tag == 'url') {
@@ -29,6 +31,14 @@ if(!function_exists('ct')) {
             $ci->load->vars($vars);
         } elseif($tag == 'get') {
             return (is_string($vars) ? $ci->load->get_var($vars) : '');
+        } elseif($tag == 'setattr') {
+            if(is_array($vars) && !empty($vars)) {
+                foreach($vars as $key => $val) {
+                    $ci->load->vars('_custum_tag_' . $key, $val);
+                }
+            }
+        } elseif($tag == 'attr') {
+            return (is_string($vars) ? $ci->load->get_var('_custum_tag_' . $vars) : '');
         } else {
             return $ci->load->tag($tag, $vars);
         }

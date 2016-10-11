@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="width=1024, user-scalable=yes, initial-scale=1, maximum-scale=1, minimum-scale=1"/>
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>AXBOOT :: ${pageName}</title>
+    <title>AXBOOT :: <?=ax('get', 'pageName')?></title>
 
     <link rel="shortcut icon" href="<?=ax('url', '/assets/favicon.ico')?>" type="image/x-icon"/>
     <link rel="icon" href="<?=ax('url', '/assets/favicon.ico')?>" type="image/x-icon"/>
@@ -15,9 +15,10 @@
     <?php foreach($this->_css as $_css): ?><?=$_css?><?php endforeach; ?>
 
     <script type="text/javascript">
-        var CONTEXT_PATH = "<%=ContextUtil.getContext()%>";
-        var SCRIPT_SESSION = (function(json){return json;})(${scriptSession});
+        var CONTEXT_PATH = "<?=ax('get', 'contextPath')?>";
+        var SCRIPT_SESSION = (function(json){return json;})(<?=ax('get', 'scriptSession')?>);
     </script>
+
     <script type="text/javascript" src="<?=ax('url', '/assets/js/plugins.min.js')?>"></script>
     <script type="text/javascript" src="<?=ax('url', '/assets/js/axboot/dist/axboot.js')?>"></script>
     <?php foreach($this->_js as $_js): ?><?=$_js?><?php endforeach; ?>

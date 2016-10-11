@@ -61,7 +61,7 @@ class MY_Loader extends CI_Loader
         if(file_exists(VIEWPATH . $tag_file . '.php')) {
             return $this->_ci_load(array('_ci_view' => $tag_file, '_ci_vars' => null, '_ci_return' => true));
         } else {
-            return 'Not define tag (' .  $tag . ')';
+            return ($tag[0] == '/' ? '' : 'Not define tag (' .  $tag . ')');
         }
     }
 

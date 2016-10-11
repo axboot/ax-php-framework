@@ -3,9 +3,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class MY_Controller extends CI_Controller {
     public $user_info;
+    public $auth_group_menu;
 
     public function __construct() {
         parent::__construct();
+
+        $this->auth_group_menu = array(
+            'schAh' => 'N', // 조회
+            'savAh' => 'N', // 저장
+            'exlAh' => 'N', // 엑셀
+            'delAh' => 'N', // 삭제
+            'fn1Ah' => 'N', // 기능1
+            'fn2Ah' => 'N', // 기능2
+            'fn3Ah' => 'N', // 기능3
+            'fn4Ah' => 'N', // 기능4
+            'fn5Ah' => 'N', // 기능5
+        );
     }
 }
 

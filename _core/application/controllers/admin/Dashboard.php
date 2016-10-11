@@ -9,6 +9,15 @@ class Dashboard extends Admin_Controller
 
     public function index()
     {
-        $this->load->view('admin/dashboard');
+        switch($this->input->get('progCd')) {
+            default:
+                $this->dashboard();
+                break;
+        }
+    }
+
+    public function dashboard()
+    {
+        $this->load->view('admin/dashboard/dashboard');
     }
 }
