@@ -9,9 +9,9 @@ $axServerList = array(
 		'baseurl' => 'http://ax5sample.dev',
 		'index_page' => '',
 		'db' => array(
-			'hostname' => getenv('localhost:3308'),
-			'username' => getenv('ax5'),
-			'password' => getenv('LozAfu3EJELO'),
+			'hostname' => 'localhost:3308',
+			'username' => 'ax5',
+			'password' => 'LozAfu3EJELO',
 			'dbdriver' => 'mysqli'
 		)
 	),
@@ -49,9 +49,10 @@ $axServerList = array(
 define('ENVIRONMENT', isset($axServerList[$_SERVER['HTTP_HOST']]['env']) ? $axServerList[$_SERVER['HTTP_HOST']]['env'] : 'production');
 define('AXBASEURL', isset($axServerList[$_SERVER['HTTP_HOST']]['baseurl']) ? $axServerList[$_SERVER['HTTP_HOST']]['baseurl'] : 'http://' . $_SERVER['HTTP_HOST']);
 define('AXINDEXPAGE', isset($axServerList[$_SERVER['HTTP_HOST']]['index_page']) ? $axServerList[$_SERVER['HTTP_HOST']]['index_page'] : 'index.php');
-define('AXDB', isset($axServerList[$_SERVER['HTTP_HOST']]['db']) ? $axServerList[$_SERVER['HTTP_HOST']]['db'] : array());
-
-var_dump(AXDB);
+define('AXDBDRIVER', isset($axServerList[$_SERVER['HTTP_HOST']]['db']['dbdriver']) ? $axServerList[$_SERVER['HTTP_HOST']]['db']['dbdriver'] : 'mysqli');
+define('AXDBHOST', isset($axServerList[$_SERVER['HTTP_HOST']]['db']['hostname']) ? $axServerList[$_SERVER['HTTP_HOST']]['db']['hostname'] : 'localhost');
+define('AXDBUSER', isset($axServerList[$_SERVER['HTTP_HOST']]['db']['username']) ? $axServerList[$_SERVER['HTTP_HOST']]['db']['username'] : '');
+define('AXDBPASSWORD', isset($axServerList[$_SERVER['HTTP_HOST']]['db']['password']) ? $axServerList[$_SERVER['HTTP_HOST']]['db']['password'] : '');
 
 /**
  * CodeIgniter

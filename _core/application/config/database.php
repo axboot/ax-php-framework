@@ -75,11 +75,11 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => '',
-	'password' => '',
+	'hostname' => AXDBHOST,
+	'username' => AXDBUSER,
+	'password' => AXDBPASSWORD,
 	'database' => '',
-	'dbdriver' => 'mysqli',
+	'dbdriver' => AXDBDRIVER,
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
