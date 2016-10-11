@@ -29,7 +29,7 @@ class MY_Loader extends CI_Loader
                 return json_encode($vars);
             }
 
-            $this->ci->output->set_content_type('json')->set_output(json_encode($vars, JSON_UNESCAPED_UNICODE));
+            $this->ci->output->set_content_type('json')->set_output(json_encode($vars));
         } else {
             $content = $this->_ci_load(array('_ci_view' => $view, '_ci_vars' => $this->_ci_object_to_array($vars), '_ci_return' => true));
             if($this->_layout == NULL) {
