@@ -13,9 +13,13 @@ class Admin_Controller extends MY_Controller {
     public function __construct() {
         parent::__construct();
 
-        $this->user_info = array(
-            'userNm' => '시스템 관리자'
-        );
+        if($this->session->userdata('is_login')) {
+            $this->user_info = array(
+                'userNm' => '시스템 관리자'
+            );
+        } else {
+            redirect('/');
+        }
 //        if(isset($this->session->id) && intval($this->session->id) > 0) {
 //            $this->load->library('aclmapper', null, 'acl');
 //
