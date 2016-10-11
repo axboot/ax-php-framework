@@ -235,7 +235,7 @@ fnObj.tabView = axboot.viewExtend({
     frameTarget: null,
     limitCount: 10,
     list: [
-        {menuId: "00-dashboard", id: "dashboard", progNm: '홈', menuNm: '홈', progPh: '/jsp/dashboard.jsp', url: CONTEXT_PATH + '/jsp/dashboard.jsp?progCd=dashboard', status: "on", fixed: true}
+        {menuId: "00-dashboard", id: "dashboard", progNm: '홈', menuNm: '홈', progPh: '/admin/dashboard', url: CONTEXT_PATH + '/admin/dashboard?progCd=dashboard', status: "on", fixed: true}
     ],
     initView: function () {
         this.target = $("#ax-frame-header-tab-container");

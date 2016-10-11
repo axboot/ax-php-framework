@@ -88,7 +88,7 @@ class MY_Loader extends CI_Loader
 
     public function set_js($js)
     {
-        $jsfile = (strncmp(strtolower($js), '<script', 7) === 0 ? $js : sprintf('<script type="text/javascript" src="%s"></script>', $js)) . "\n";
+        $jsfile = (strncmp(strtolower($js), '<script', 7) === 0 ? $js : sprintf('<script type="text/javascript" src="%s"></script>', base_url($js))) . "\n";
         $this->_js[md5($jsfile)] = $jsfile;
 
         return $this;
@@ -96,7 +96,7 @@ class MY_Loader extends CI_Loader
 
     public function set_css($css)
     {
-        $cssfile = (strncmp(strtolower($css), '<link', 5) === 0 ? $css : sprintf('<link rel="stylesheet" type="text/css" href="%s"/>', $css)) . "\n";
+        $cssfile = (strncmp(strtolower($css), '<link', 5) === 0 ? $css : sprintf('<link rel="stylesheet" type="text/css" href="%s"/>', base_url($css))) . "\n";
         $this->_css[md5($cssfile)] = $cssfile;
 
         return $this;

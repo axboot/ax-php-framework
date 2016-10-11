@@ -1,6 +1,6 @@
 <?php
 
-class Main extends Admin_Controller
+class Dashboard extends Admin_Controller
 {
     public function __construct()
     {
@@ -9,6 +9,6 @@ class Main extends Admin_Controller
 
     public function index()
     {
-        $this->load->view('admin/main');
+        $this->load->view('admin/dashboard');
     }
 }
