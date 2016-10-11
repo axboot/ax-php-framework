@@ -1,4 +1,4 @@
-<?=ax('js', base_url('assets/js/axboot/dist/good-words.js'))?>
+<?=ax('js', '/assets/js/axboot/dist/good-words.js')?>
 <?=ax('set', array('axbody_class' => 'login'))?>
 
 <?=ax('layout', 'empty')?>
@@ -10,7 +10,7 @@
         <div class="panel">
             <div class="panel-heading">아이디와 패스워드를 입력해주세요.</div>
             <div class="panel-body">
-                <form name="login-form" class="" method="post" action="/api/login" onsubmit="return fnObj.login();" autocomplete="off">
+                <form name="login-form" class="" method="post" onsubmit="return fnObj.login();" autocomplete="off">
 
                     <div class="form-group">
                         <label for="userCd"><i class="cqc-new-message"></i> ID</label>
@@ -59,7 +59,7 @@
             login: function () {
                 axboot.ajax({
                     method: "POST",
-                    url: "/api/login",
+                    url: "<?=ax('siteUrl', '/api/login')?>",
                     data: JSON.stringify({
                         "userCd": $("#userCd").val(),
                         "userPs": $("#userPs").val()
