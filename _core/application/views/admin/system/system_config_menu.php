@@ -8,18 +8,7 @@
 <?=ax('layout', 'base')?>
     <?=ax('page-buttons')?><?=ax('/page-buttons')?>
 
-    <div role="page-header">
-        <?=ax('form', array('name' => 'searchView0'))?>
-            <?=ax('tbl', array('clazz' => 'ax-search-tbl', 'style' => 'minWidth:500px;'))?>
-                <?=ax('tr')?>
-                    <?=ax('td', array('label' => '메뉴그룹', 'width' => '300px'))?>
-                        <?=ax('common-code', array('groupCd' => 'MENU_GROUP', 'id' => 'menuGrpCd'))?>
-                    <?=ax('/td')?>
-                <?=ax('/tr')?>
-            <?=ax('/tbl')?>
-        <?=ax('/form')?>
-        <div class="H10"></div>
-    </div>
+    <?=ax('page-header')?><?=ax('/page-header')?>
 
 
     <?=ax('split-layout', array('name' => 'ax1', 'oriental' => 'vertical'))?>

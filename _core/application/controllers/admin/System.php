@@ -49,6 +49,13 @@ class System extends Admin_Controller
     
     public function system_auth_user()
     {
-        
+        // 조회메뉴 활성화
+        $this->auth_group_menu['schAh'] = 'Y';
+        // 저장메뉴 활성화
+        $this->auth_group_menu['savAh'] = 'Y';
+        // 제목
+        ax('set', array('pageName' => '사용자 관리'));
+
+        $this->load->view('admin/system/system_auth_user');
     }
 }
