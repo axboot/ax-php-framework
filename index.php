@@ -11,6 +11,7 @@ $axServerList = array(
 		'db' => array(
 			'hostname' => 'localhost:3308',
 			'username' => 'ax5',
+			'database' => 'ax5',
 			'password' => 'LozAfu3EJELO',
 			'dbdriver' => 'mysqli'
 		)
@@ -22,6 +23,7 @@ $axServerList = array(
 		'db' => array(
 			'hostname' => getenv('OPENSHIFT_MYSQL_DB_HOST'),
 			'username' => getenv('OPENSHIFT_MYSQL_DB_USERNAME'),
+			'database' => 'ax5',
 			'password' => getenv('OPENSHIFT_MYSQL_DB_PASSWORD'),
 			'dbdriver' => 'mysqli'
 		)
@@ -51,6 +53,7 @@ define('AXBASEURL', isset($axServerList[$_SERVER['HTTP_HOST']]['baseurl']) ? $ax
 define('AXINDEXPAGE', isset($axServerList[$_SERVER['HTTP_HOST']]['index_page']) ? $axServerList[$_SERVER['HTTP_HOST']]['index_page'] : 'index.php');
 define('AXDBDRIVER', isset($axServerList[$_SERVER['HTTP_HOST']]['db']['dbdriver']) ? $axServerList[$_SERVER['HTTP_HOST']]['db']['dbdriver'] : 'mysqli');
 define('AXDBHOST', isset($axServerList[$_SERVER['HTTP_HOST']]['db']['hostname']) ? $axServerList[$_SERVER['HTTP_HOST']]['db']['hostname'] : 'localhost');
+define('AXDATABASE', isset($axServerList[$_SERVER['HTTP_HOST']]['db']['database']) ? $axServerList[$_SERVER['HTTP_HOST']]['db']['database'] : '');
 define('AXDBUSER', isset($axServerList[$_SERVER['HTTP_HOST']]['db']['username']) ? $axServerList[$_SERVER['HTTP_HOST']]['db']['username'] : '');
 define('AXDBPASSWORD', isset($axServerList[$_SERVER['HTTP_HOST']]['db']['password']) ? $axServerList[$_SERVER['HTTP_HOST']]['db']['password'] : '');
 

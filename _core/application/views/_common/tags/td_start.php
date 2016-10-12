@@ -11,7 +11,7 @@
         ax('setAttr', array('style' => ax('attr', 'style') . ';width:' . ax('attr', 'trWidth')));
     }
 ?>
-<?php if(ax('attr', 'label')): ?>
+<?php if(ax('attr', 'label')): ax('setAttr', array('is_label' => true)); ?>
     <div data-ax-td="<?=ax('attr', 'id')?>" id="<?=ax('attr', 'id')?>" class="<?=ax('attr', 'clazz')?>" style="<?=ax('attr', 'style')?>">
         <div data-ax-td-label="<?=ax('attr', 'id')?>" class="<?=ax('attr', 'labelClazz')?>" style="<?=ax('attr', 'labelStyle')?>"><?=ax('attr', 'label')?></div>
         <div data-ax-td-wrap="">

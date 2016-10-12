@@ -1,0 +1,1 @@
+<div data-splitter='{}'><?=ax('setAttr', array('width' => '', 'height' => ''))?>

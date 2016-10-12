@@ -9,5 +9,5 @@
         ax('setAttr', array('method' => 'post'));
     }
 ?>
-<form name="<?=ax('attr', 'name')?>" id="<?=ax('attr', 'id')?>" method="<?=ax('attr', 'method')?>" ="<?=ax('attr', 'onsubmit')?>" style="<?=ax('attr', 'style')?>">
+<form name="<?=ax('attr', 'name')?>" id="<?=ax('attr', 'id')?>" method="<?=ax('attr', 'method')?>" onsubmit="<?=ax('attr', 'onsubmit')?>" style="<?=ax('attr', 'style')?>">
 <?=ax('setAttr', array('name' => '', 'id' => '', 'metthod' => '', 'style'  => '', 'onsubmit' => '', 'valign' => ''))?>

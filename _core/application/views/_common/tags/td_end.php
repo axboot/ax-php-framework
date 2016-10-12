@@ -1,4 +1,4 @@
-<?php if(ax('attr', 'label')): ?>
+<?php if(ax('attr', 'is_label')): ax('setAttr', array('is_label' => '')); ?>
         </div>
     </div>
 <?php else: ?>
