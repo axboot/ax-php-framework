@@ -8,7 +8,7 @@
 <?=ax('layout', 'base')?>
     <?=ax('page-buttons')?><?=ax('/page-buttons')?>
 
-    <?=ax('page-header' array('minWidth' => '500px', 'label' => '검색', 'width' => '300px'))?>
+    <?=ax('page-header', array('minWidth' => '500px', 'label' => '검색', 'width' => '300px'))?>
         <input type="text" name="filter" id="filter" class="form-control" value="" placeholder="검색어를 입력하세요."/>
     <?=ax('/page-header')?>
 

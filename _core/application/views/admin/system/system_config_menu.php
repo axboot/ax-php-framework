@@ -8,7 +8,7 @@
 <?=ax('layout', 'base')?>
     <?=ax('page-buttons')?><?=ax('/page-buttons')?>
 
-    <?=ax('page-header' array('minWidth' => '500px', 'label' => '메뉴그룹', 'width' => '300px'))?>
+    <?=ax('page-header', array('minWidth' => '500px', 'label' => '메뉴그룹', 'width' => '300px'))?>
         <?=ax('common-code', array('groupCd' => 'MENU_GROUP', 'id' => 'menuGrpCd'))?>
     <?=ax('/page-header')?>
 
