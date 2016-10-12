@@ -9,6 +9,8 @@ class System extends Admin_Controller
         parent::__construct();
 
         $this->menu_id = $this->input->get('menuId');
+        
+        ax('set', array('menuId' => $this->input->get('menuId')));
     }
 
     public function system_config_common_code()
@@ -67,5 +69,17 @@ class System extends Admin_Controller
         ax('set', array('pageName' => '에러로그 조회'));
 
         $this->load->view('admin/system/system_operation_log');
+    }
+
+    public function system_help_manual()
+    {
+        // 조회메뉴 활성화
+        $this->auth_group_menu['schAh'] = 'Y';
+        // 저장메뉴 활성화
+        $this->auth_group_menu['savAh'] = 'Y';
+        // 제목
+        ax('set', array('pageName' => '사용자 관리'));
+
+        $this->load->view('admin/system/system_help_manual');
     }
 }
