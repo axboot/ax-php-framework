@@ -8,8 +8,9 @@
 <?=ax('layout', 'base')?>
     <?=ax('page-buttons')?><?=ax('/page-buttons')?>
 
-    <?=ax('page-header')?><?=ax('/page-header')?>
-
+    <?=ax('page-header')?>
+        <?=ax('common-code', array('groupCd' => 'MENU_GROUP', 'id' => 'menuGrpCd'))?>
+    <?=ax('/page-header')?>
 
     <?=ax('split-layout', array('name' => 'ax1', 'oriental' => 'vertical'))?>
         <?=ax('split-panel', array('width' => '300', 'style' => 'padding-right: 10px;'))?>

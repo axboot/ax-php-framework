@@ -9,7 +9,10 @@
 
     <?=ax('page-buttons')?><?=ax('/page-buttons')?>
 
-    <?=ax('page-header')?><?=ax('/page-header')?>
+    <?=ax('page-header')?>
+        <input type="text" name="filter" id="filter" class="form-control" value="" placeholder="검색어를 입력하세요."/>
+    <?=ax('/page-header')?>
+
 
     <?=ax('split-layout', array('name' => "ax1", 'oriental' => "vertical"))?>
         <?=ax('split-panel', array('width' => "40%", 'style' => "padding-right: 10px;"))?>
@@ -125,8 +128,6 @@
                 <?=ax('tbl', array('clazz' => "ax-form-tbl"))?>
                     <?=ax('tr')?>
                         <?=ax('td', array('label' => "권한그룹", 'width' => "100%"))?>
-                            <?=ax('common-code', array('groupCd' => "AUTH_GROUP", 'dataPath' => "grpAuthCd", 'name' => "grpAuthCd", 'type' => "checkbox"))?>
-                        <?=ax('td')?>
                     <?=ax('tr')?>
                 <?=ax('tbl')?>
 
