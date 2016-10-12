@@ -115,9 +115,9 @@
                     <?=ax('tr')?>
                         <?=ax('td', array('label' => "메뉴그룹", 'width' => "250px"))?>
                             <?=ax('common-code', array('groupCd' => "MENU_GROUP", 'dataPath' => "menuGrpCd"))?>
-                        <?=ax('td')?>
-                    <?=ax('tr')?>
-                <?=ax('tbl')?>
+                        <?=ax('/td')?>
+                    <?=ax('/tr')?>
+                <?=ax('/tbl')?>
 
                 <div class="H5"></div>
                 <div class="ax-button-group sm">
@@ -128,8 +128,8 @@
                 <?=ax('tbl', array('clazz' => "ax-form-tbl"))?>
                     <?=ax('tr')?>
                         <?=ax('td', array('label' => "권한그룹", 'width' => "100%"))?>
-                    <?=ax('tr')?>
-                <?=ax('tbl')?>
+                    <?=ax('/tr')?>
+                <?=ax('/tbl')?>
 
                 <div class="H5"></div>
                 <div class="ax-button-group sm">
