@@ -58,4 +58,14 @@ class System extends Admin_Controller
 
         $this->load->view('admin/system/system_auth_user');
     }
+
+    public function system_operation_log()
+    {
+        // 조회메뉴 활성화
+        $this->auth_group_menu['schAh'] = 'Y';
+        // 제목
+        ax('set', array('pageName' => '에러로그 조회'));
+
+        $this->load->view('admin/system/system_operation_log');
+    }
 }
