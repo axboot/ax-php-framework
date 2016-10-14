@@ -1,7 +1,7 @@
 <?=ax('set', array(
     'title' => ax('get', 'pageName'),
     'page_desc' => ax('get', 'PAGE_REMARK'),
-    'page_auto_height' => 'true'
+    'page_auto_height' => 'false'
 ))?>
 
 <?=ax('js', '/assets/plugins/prettify/prettify.js')?>

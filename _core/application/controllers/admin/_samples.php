@@ -9,7 +9,11 @@ class _samples extends CI_Controller
     
     public function page_structure()
     {
-        ax('set', array('pageName' => '페이지구조설명'));
+        if($this->input->get('menuId') == 12) {
+            ax('set', array('pageName' => '상하레이아웃'));
+        } else {
+            ax('set', array('pageName' => '페이지구조설명'));
+        }
         $this->load->view('admin/_samples/page_structure');
     }
     
