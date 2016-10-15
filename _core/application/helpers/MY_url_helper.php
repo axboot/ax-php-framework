@@ -5,6 +5,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 if(!function_exists('ct')) {
     function ct($tag, $vars = '')
     {
+        static $ob_start_markdown = false;
+
         $ci = &get_instance();
 
         $tag = strtolower($tag);
@@ -27,6 +29,20 @@ if(!function_exists('ct')) {
             $ci->load->set_layout($vars);
         } elseif($tag == '/layout') {
             return '';
+        } elseif($tag == 'markdown') {
+            if(is_array($vars) && isset($vars['src'])) {
+                return $ci->load->tag($tag, $vars);
+            } else {
+                $ob_start_markdown = true;
+                ob_start();
+            }
+        } elseif($tag == '/markdown') {
+            if($ob_start_markdown) {
+                $ob_start_markdown = false;
+                return \Michelf\MarkdownExtra::defaultTransform(ob_get_clean());
+            } else {
+                return $ci->load->tag($tag, $vars);
+            }
         } elseif($tag == 'set') {
             $ci->load->vars($vars);
         } elseif($tag == 'get') {
