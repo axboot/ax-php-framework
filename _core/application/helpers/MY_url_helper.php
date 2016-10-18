@@ -39,7 +39,15 @@ if(!function_exists('ct')) {
         } elseif($tag == '/markdown') {
             if($ob_start_markdown) {
                 $ob_start_markdown = false;
-                return \Michelf\MarkdownExtra::defaultTransform(ob_get_clean());
+                $markdown_src = ob_get_clean();
+                if($markdown_src) {
+                    $markdown_src = explode("\n", $markdown_src);
+                    foreach($markdown_src as $key => $line) {
+                        $markdown_src[$key] = ltrim($line);
+                    }
+                    $markdown_src = implode("\n", $markdown_src);
+                }
+                return \Michelf\MarkdownExtra::defaultTransform($markdown_src);
             } else {
                 return $ci->load->tag($tag, $vars);
             }
