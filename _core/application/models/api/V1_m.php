@@ -2,9 +2,38 @@
 
 class V1_m extends Api_Model
 {
+    protected $qCommonCodeFilter;
+    protected $qProgramFilter;
+
     public function __construct()
     {
         parent::__construct();
+
+        $this->qCommonCodeFilter = array(
+            'GROUP_CD' => 'groupCd',
+            'GROUP_NM' => 'groupNm',
+            'CODE' => 'code',
+            'NAME' => 'name',
+            'SORT' => 'sort'
+        );
+
+        $this->qProgramFilter = array(
+            'PROG_CD' => 'progCd',
+            'PROG_NM' => 'progNm',
+            'PROG_PH' => 'progPh',
+            'TARGET' => 'target',
+            'AUTH_CHECK' => 'authCheck',
+            'SCH_AH' => 'schAh',
+            'SAV_AH' => 'savAh',
+            'EXL_AH' => 'exlAh',
+            'DEL_AH' => 'delAh',
+            'FN1_AH' => 'fn1Ah',
+            'FN2_AH' => 'fn2Ah',
+            'FN3_AH' => 'fn3Ah',
+            'FN4_AH' => 'fn4Ah',
+            'FN5_AH' => 'fn5Ah',
+            'REMARK' => 'remark'
+        );
     }
 
     public function rest_get_commonCodes()
@@ -14,13 +43,7 @@ class V1_m extends Api_Model
         $filter = $this->input->get('filter'); // 검색어
 
         $qCommonCode = new Tblmapper('COMMON_CODE_M');
-        $qCommonCode->set_filter_column(array(
-            'GROUP_CD' => 'groupCd',
-            'GROUP_NM' => 'groupNm',
-            'CODE' => 'code',
-            'NAME' => 'name',
-            'SORT' => 'sort'
-        ));
+        $qCommonCode->set_filter_column($this->qCommonCodeFilter);
 
         if($groupCd) {
             $qCommonCode->where('GROUP_CD', $groupCd);
@@ -55,41 +78,51 @@ class V1_m extends Api_Model
     public function rest_put_commonCodes()
     {
         $qCommonCode = new Tblmapper('COMMON_CODE_M');
-        $qCommonCode->set_filter_column(array(
-            'GROUP_CD' => 'groupCd',
-            'GROUP_NM' => 'groupNm',
-            'CODE' => 'code',
-            'NAME' => 'name',
-            'SORT' => 'sort'
-        ));
 
-        $put_data = $this->get_req();
-
-        if(!empty($put_data)) {
-            foreach ($put_data as $idx => $row) {
-                if (is_int($idx) && is_array($row) && !empty($row)) {
-                    if (isset($row['__deleted__']) && $row['__deleted__'] == true) {
-                        if (isset($row['id']) && !empty($row['id'])) {
-                            $where = $qCommonCode->get_filter_where($row['id']);
-                            $qCommonCode->where($where)->delete();
-                        }
-                    } elseif (isset($row['__created__']) && $row['__created__'] == true && !isset($row['id'])) {
-                        $insert_data = $qCommonCode->get_filter_data($row);
-                        $qCommonCode->insert($insert_data);
-                    } elseif (isset($row['__modified__']) && $row['__modified__'] == true && isset($row['id'])) {
-                        $where = $qCommonCode->get_filter_where($row['id']);
-                        $update_data = $qCommonCode->get_filter_data($row);
-                        $qCommonCode->where($where)->update($update_data);
-                    }
-                }
-            }
-        }
+        ax_cud($qCommonCode->set_filter_column($this->qCommonCodeFilter), $this->get_req());
     }
 
     public function rest_get_programs()
     {
-        // Test용 샘플 데이터
-        $this->set_res(json_decode('{"page":{"totalPages":0,"totalElements":0,"currentPage":0,"pageSize":0},"list":[{"createdAt":"2016-10-03T07:35:59.989Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.913Z","updatedBy":"system","progCd":"api","progNm":"API","progPh":"/swagger/","target":"_self","authCheck":"N","schAh":"Y","savAh":"Y","exlAh":"N","delAh":"N","fn1Ah":"N","fn2Ah":"N","fn3Ah":"N","fn4Ah":"N","fn5Ah":"N","id":"api","dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-09T07:28:42.884Z","createdBy":"system","updatedAt":"2016-10-09T07:28:42.884Z","updatedBy":"system","progCd":"ax-phase-auth","progNm":"[API]ax:phase&ax:auth","progPh":"/jsp/_apis/ax-phase-auth.jsp","target":"_self","authCheck":"N","schAh":"N","savAh":"N","exlAh":"N","delAh":"N","fn1Ah":"N","fn2Ah":"N","fn3Ah":"N","fn4Ah":"N","fn5Ah":"N","id":"ax-phase-auth","dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:35:59.995Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.914Z","updatedBy":"system","progCd":"axboot-js","progNm":"[API]axboot.js","progPh":"/jsp/_apis/axboot-js.jsp","target":"_self","authCheck":"N","id":"axboot-js","dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-09T07:28:42.875Z","createdBy":"system","updatedAt":"2016-10-09T07:28:42.875Z","updatedBy":"system","progCd":"form-example","progNm":"[API]폼 상세설명","progPh":"/jsp/_apis/form-example.jsp","target":"_self","authCheck":"N","schAh":"N","savAh":"N","exlAh":"N","delAh":"N","fn1Ah":"N","fn2Ah":"N","fn3Ah":"N","fn4Ah":"N","fn5Ah":"N","id":"form-example","dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.008Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.914Z","updatedBy":"system","progCd":"grid-tabform","progNm":"[샘플]그리드&탭폼 템플릿","progPh":"/jsp/_samples/grid-tabform.jsp","target":"_self","authCheck":"Y","schAh":"Y","savAh":"Y","id":"grid-tabform","dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.005Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.914Z","updatedBy":"system","progCd":"grid-form","progNm":"[샘플]그리드&폼 템플릿","progPh":"/jsp/_samples/grid-form.jsp","target":"_self","authCheck":"Y","schAh":"Y","savAh":"Y","id":"grid-form","dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.914Z","updatedBy":"system","progCd":"basic","progNm":"[샘플]기본템플릿","progPh":"/jsp/_samples/basic.jsp","target":"_self","authCheck":"Y","schAh":"Y","savAh":"Y","id":"basic","dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.006Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.914Z","updatedBy":"system","progCd":"grid-modal","progNm":"[샘플]모달 템플릿","progPh":"/jsp/_samples/grid-modal.jsp","target":"_self","authCheck":"Y","schAh":"Y","savAh":"Y","id":"grid-modal","dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.014Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.915Z","updatedBy":"system","progCd":"horizontal-layout","progNm":"[샘플]상하레이아웃","progPh":"/jsp/_samples/horizontal-layout.jsp","target":"_self","authCheck":"N","id":"horizontal-layout","dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.052Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.918Z","updatedBy":"system","progCd":"vertical-layout","progNm":"[샘플]좌우레이아웃","progPh":"/jsp/_samples/vertical-layout.jsp","target":"_self","authCheck":"N","id":"vertical-layout","dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.050Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.918Z","updatedBy":"system","progCd":"tab-layout","progNm":"[샘플]탭레이아웃","progPh":"/jsp/_samples/tab-layout.jsp","target":"_self","authCheck":"N","id":"tab-layout","dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.029Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.915Z","updatedBy":"system","progCd":"page-structure","progNm":"[샘플]페이지구조","progPh":"/jsp/_samples/page-structure.jsp","target":"_self","authCheck":"N","id":"page-structure","dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.038Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.915Z","updatedBy":"system","progCd":"system-config-common-code","progNm":"공통코드관리","progPh":"/jsp/system/system-config-common-code.jsp","target":"_self","authCheck":"Y","schAh":"Y","savAh":"Y","exlAh":"Y","delAh":"N","fn1Ah":"N","fn2Ah":"N","fn3Ah":"N","fn4Ah":"N","fn5Ah":"N","id":"system-config-common-code","dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.024Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.915Z","updatedBy":"system","progCd":"login","progNm":"로그인","progPh":"/jsp/login.jsp","target":"_self","authCheck":"N","schAh":"N","savAh":"N","exlAh":"N","delAh":"N","fn1Ah":"N","fn2Ah":"N","fn3Ah":"N","fn4Ah":"N","fn5Ah":"N","id":"login","dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.044Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.917Z","updatedBy":"system","progCd":"system-help-manual","progNm":"매뉴얼 관리","progPh":"/jsp/system/system-help-manual.jsp","target":"_self","authCheck":"Y","schAh":"Y","savAh":"Y","exlAh":"N","delAh":"N","fn1Ah":"Y","fn2Ah":"N","fn3Ah":"N","fn4Ah":"N","fn5Ah":"N","id":"system-help-manual","dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.040Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.916Z","updatedBy":"system","progCd":"system-config-menu","progNm":"메뉴관리","progPh":"/jsp/system/system-config-menu.jsp","target":"_self","authCheck":"Y","schAh":"Y","savAh":"Y","exlAh":"N","delAh":"N","fn1Ah":"N","fn2Ah":"N","fn3Ah":"N","fn4Ah":"N","fn5Ah":"N","id":"system-config-menu","dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.027Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.915Z","updatedBy":"system","progCd":"main","progNm":"메인","progPh":"/jsp/main.jsp","target":"_self","authCheck":"N","schAh":"N","savAh":"N","exlAh":"N","delAh":"N","fn1Ah":"N","fn2Ah":"N","fn3Ah":"N","fn4Ah":"N","fn5Ah":"N","id":"main","dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.035Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.915Z","updatedBy":"system","progCd":"system-auth-user","progNm":"사용자관리","progPh":"/jsp/system/system-auth-user.jsp","target":"_self","authCheck":"Y","schAh":"Y","savAh":"Y","exlAh":"N","delAh":"N","fn1Ah":"N","fn2Ah":"N","fn3Ah":"N","fn4Ah":"N","fn5Ah":"N","id":"system-auth-user","dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.048Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.918Z","updatedBy":"system","progCd":"system-operation-log","progNm":"에러로그 조회","progPh":"/jsp/system/system-operation-log.jsp","target":"_self","authCheck":"Y","schAh":"Y","savAh":"N","exlAh":"N","delAh":"N","fn1Ah":"Y","fn2Ah":"N","fn3Ah":"N","fn4Ah":"N","fn5Ah":"N","id":"system-operation-log","dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.042Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.917Z","updatedBy":"system","progCd":"system-config-program","progNm":"프로그램관리","progPh":"/jsp/system/system-config-program.jsp","target":"_self","authCheck":"Y","schAh":"Y","savAh":"Y","exlAh":"N","delAh":"N","fn1Ah":"N","fn2Ah":"N","fn3Ah":"N","fn4Ah":"N","fn5Ah":"N","id":"system-config-program","dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false}]}', true));
+        $filter = $this->input->get('filter'); // 검색어
+
+        $qProgram = new Tblmapper('PROG_M');
+        $qProgram->set_filter_column($this->qProgramFilter);
+
+        if($filter) {
+            $qProgram->set_filter($filter);
+        }
+
+        $data = $qProgram
+            ->order_by('PROG_NM')
+            ->get_ax5_page();
+
+        for($i = 0, $row_len = count($data['data']); $i < $row_len; $i++) {
+            $data['data'][$i]['id'] = array(
+                'progCd' => $data['data'][$i]['progCd']
+            );
+        }
+
+        $this->set_res(array(
+            'page' => $data['page'],
+            'list' => $data['data']
+        ));
+    }
+
+    public function rest_put_programs()
+    {
+        $qProgram = new Tblmapper('PROG_M');
+
+        $put_data = $this->get_req();
+
+        if(!empty($put_data)) {
+            foreach($put_data as $idx => $row) {
+                $put_data[$idx]['progCd'] = md5($row['progPh']);
+            }
+        }
+
+        // Api cud 함수 호출
+        ax_cud($qProgram->set_filter_column($this->qProgramFilter), $put_data);
     }
 
     public function rest_get_users()

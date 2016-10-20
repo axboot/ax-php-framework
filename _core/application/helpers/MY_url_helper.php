@@ -78,3 +78,31 @@ if(!function_exists('ax')) {
         return ct($tag, $vars);
     }
 }
+
+// Api Creagte,Update,Delete 함수
+if(!function_exists('ax_cud')) {
+    function ax_cud($tbl, $put_data)
+    {
+        if(!empty($put_data)) {
+            foreach ($put_data as $idx => $row) {
+                if (is_int($idx) && is_array($row) && !empty($row)) {
+                    if (isset($row['__deleted__']) && $row['__deleted__'] == true) {
+                        if (isset($row['id']) && !empty($row['id'])) {
+                            $where = $tbl->get_filter_where($row['id']);
+
+                            $tbl->where($where)->delete();
+                        }
+                    } elseif (isset($row['__created__']) && $row['__created__'] == true && !isset($row['id'])) {
+                        $insert_data = $tbl->get_filter_data($row);
+                        $tbl->insert($insert_data);
+                    } elseif (isset($row['__modified__']) && $row['__modified__'] == true && isset($row['id'])) {
+                        $where = $tbl->get_filter_where($row['id']);
+
+                        $update_data = $tbl->get_filter_data($row);
+                        $tbl->where($where)->update($update_data);
+                    }
+                }
+            }
+        }
+    }
+}
