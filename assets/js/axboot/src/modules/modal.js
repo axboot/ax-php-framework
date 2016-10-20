@@ -32,6 +32,7 @@ axboot.modal = (function () {
             },
             animateTime: 100,
             zIndex: 5000,
+            absolute: true,
             fullScreen: false,
             header: {
                 title: "",
@@ -87,12 +88,23 @@ axboot.modal = (function () {
      * ```
      */
     var open = function (modalConfig) {
+
         modalConfig = $.extend(true, {}, defaultOption, modalConfig);
+        if (modalConfig.modalType) {
+
+            if (axboot.def.MODAL && axboot.def.MODAL[modalConfig.modalType]) {
+                if (modalConfig.param) {
+                    $.extend(true, modalConfig, {iframe: {param: modalConfig.param}});
+                }
+                modalConfig = $.extend(true, {}, modalConfig, axboot.def.MODAL[modalConfig.modalType]);
+            }
+        }
 
         $(document.body).addClass("modalOpened");
 
         this.modalCallback = modalConfig.callback;
         this.modalSendData = modalConfig.sendData;
+
         window.axModal.open(modalConfig);
     };
 

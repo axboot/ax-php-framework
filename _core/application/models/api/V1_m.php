@@ -9,14 +9,80 @@ class V1_m extends Api_Model
 
     public function rest_get_commonCodes()
     {
-        // Test용 샘플 데이터
-        switch($this->input->get('groupCd')) {
-            case 'AUTH_GROUP':
-                $this->set_res(json_decode('{"page":{"totalPages":0,"totalElements":0,"currentPage":0,"pageSize":0},"list":[{"createdAt":"2016-10-03T07:36:00.851Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.851Z","updatedBy":"system","groupCd":"AUTH_GROUP","groupNm":"권한그룹","code":"S0001","name":"시스템관리자 그룹","sort":1,"useYn":"Y","id":{"groupCd":"AUTH_GROUP","code":"S0001"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.853Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.853Z","updatedBy":"system","groupCd":"AUTH_GROUP","groupNm":"권한그룹","code":"S0002","name":"사용자 권한그룹","sort":2,"useYn":"Y","id":{"groupCd":"AUTH_GROUP","code":"S0002"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-06T02:27:10.205Z","createdBy":"system","updatedAt":"2016-10-06T02:27:10.205Z","updatedBy":"system","groupCd":"AUTH_GROUP","groupNm":"권한그룹","code":"S0003","name":"매뉴얼 관리자 그룹","sort":3,"useYn":"Y","id":{"groupCd":"AUTH_GROUP","code":"S0003"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false}]}', true));
-                break;
-            default:
-                $this->set_res(json_decode('{"page":{"totalPages":0,"totalElements":0,"currentPage":0,"pageSize":0},"list":[{"createdAt":"2016-10-03T07:36:00.846Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.846Z","updatedBy":"system","groupCd":"USER_STATUS","groupNm":"계정상태","code":"NORMAL","name":"활성","sort":1,"useYn":"Y","id":{"groupCd":"USER_STATUS","code":"NORMAL"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.799Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.799Z","updatedBy":"system","groupCd":"USER_STATUS","groupNm":"계정상태","code":"ACCOUNT_LOCK","name":"잠김","sort":2,"useYn":"Y","id":{"groupCd":"USER_STATUS","code":"ACCOUNT_LOCK"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.851Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.851Z","updatedBy":"system","groupCd":"AUTH_GROUP","groupNm":"권한그룹","code":"S0001","name":"시스템관리자 그룹","sort":1,"useYn":"Y","id":{"groupCd":"AUTH_GROUP","code":"S0001"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.853Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.853Z","updatedBy":"system","groupCd":"AUTH_GROUP","groupNm":"권한그룹","code":"S0002","name":"사용자 권한그룹","sort":2,"useYn":"Y","id":{"groupCd":"AUTH_GROUP","code":"S0002"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-06T02:27:10.205Z","createdBy":"system","updatedAt":"2016-10-06T02:27:10.205Z","updatedBy":"system","groupCd":"AUTH_GROUP","groupNm":"권한그룹","code":"S0003","name":"매뉴얼 관리자 그룹","sort":3,"useYn":"Y","id":{"groupCd":"AUTH_GROUP","code":"S0003"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.832Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.832Z","updatedBy":"system","groupCd":"LOCALE","groupNm":"로케일","code":"ko_KR","name":"대한민국","sort":1,"useYn":"Y","id":{"groupCd":"LOCALE","code":"ko_KR"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.830Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.830Z","updatedBy":"system","groupCd":"LOCALE","groupNm":"로케일","code":"en_US","name":"미국","sort":2,"useYn":"Y","id":{"groupCd":"LOCALE","code":"en_US"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.855Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.855Z","updatedBy":"system","groupCd":"MENU_GROUP","groupNm":"메뉴그룹","code":"SYSTEM_MANAGER","name":"시스템 관리자 그룹","sort":1,"useYn":"Y","id":{"groupCd":"MENU_GROUP","code":"SYSTEM_MANAGER"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.865Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.865Z","updatedBy":"system","groupCd":"MENU_GROUP","groupNm":"메뉴그룹","code":"USER","name":"사용자 그룹","sort":2,"useYn":"Y","id":{"groupCd":"MENU_GROUP","code":"USER"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.826Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.826Z","updatedBy":"system","groupCd":"MANUAL_GROUP","groupNm":"메뉴얼 그룹","code":"DEFAULT","name":"기본그룹","sort":1,"useYn":"Y","id":{"groupCd":"MANUAL_GROUP","code":"DEFAULT"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.869Z","createdBy":"system","updatedAt":"2016-10-06T02:27:14.332Z","updatedBy":"system","groupCd":"USE_YN","groupNm":"사용여부","code":"Y","name":"사용","sort":1,"useYn":"Y","id":{"groupCd":"USE_YN","code":"Y"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.844Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.844Z","updatedBy":"system","groupCd":"USE_YN","groupNm":"사용여부","code":"N","name":"사용안함","sort":2,"useYn":"Y","id":{"groupCd":"USE_YN","code":"N"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.815Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.815Z","updatedBy":"system","groupCd":"USER_ROLE","groupNm":"사용자 롤","code":"ASP_ACCESS","name":"관리시스템 접근 롤","sort":1,"useYn":"Y","id":{"groupCd":"USER_ROLE","code":"ASP_ACCESS"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.863Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.863Z","updatedBy":"system","groupCd":"USER_ROLE","groupNm":"사용자 롤","code":"SYSTEM_MANAGER","name":"시스템 관리자 롤","sort":2,"useYn":"Y","id":{"groupCd":"USER_ROLE","code":"SYSTEM_MANAGER"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.820Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.820Z","updatedBy":"system","groupCd":"USER_ROLE","groupNm":"사용자 롤","code":"ASP_MANAGER","name":"일반괸리자 롤","sort":3,"useYn":"Y","id":{"groupCd":"USER_ROLE","code":"ASP_MANAGER"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.801Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.801Z","updatedBy":"system","groupCd":"USER_ROLE","groupNm":"사용자 롤","code":"API","name":"API 접근 롤","sort":6,"useYn":"Y","id":{"groupCd":"USER_ROLE","code":"API"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.843Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.843Z","updatedBy":"system","groupCd":"DEL_YN","groupNm":"삭제여부","code":"N","name":"미삭제","sort":1,"useYn":"Y","id":{"groupCd":"DEL_YN","code":"N"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false},{"createdAt":"2016-10-03T07:36:00.867Z","createdBy":"system","updatedAt":"2016-10-03T07:36:00.867Z","updatedBy":"system","groupCd":"DEL_YN","groupNm":"삭제여부","code":"Y","name":"삭제","sort":2,"useYn":"Y","id":{"groupCd":"DEL_YN","code":"Y"},"dataStatus":"ORIGIN","__deleted__":false,"__created__":false,"__modified__":false}]}', true));
-                break;
+        $groupCd = $this->input->get('groupCd'); // 분류 코드
+        $useYn = $this->input->get('useYn'); // 사용여부 (Y/N)
+        $filter = $this->input->get('filter'); // 검색어
+
+        $qCommonCode = new Tblmapper('COMMON_CODE_M');
+        $qCommonCode->set_filter_column(array(
+            'GROUP_CD' => 'groupCd',
+            'GROUP_NM' => 'groupNm',
+            'CODE' => 'code',
+            'NAME' => 'name',
+            'SORT' => 'sort'
+        ));
+
+        if($groupCd) {
+            $qCommonCode->where('GROUP_CD', $groupCd);
+        }
+
+        if($useYn) {
+            $qCommonCode->where('USE_YN', $useYn);
+        }
+
+        if($filter) {
+            $qCommonCode->set_filter($filter);
+        }
+
+        $data = $qCommonCode
+            ->order_by('GROUP_NM')
+            ->order_by('SORT')
+            ->get_ax5_page();
+
+        for($i = 0, $row_len = count($data['data']); $i < $row_len; $i++) {
+            $data['data'][$i]['id'] = array(
+                "groupCd" => $data['data'][$i]['groupCd'],
+                "code" => $data['data'][$i]['code'],
+            );
+        }
+
+        $this->set_res(array(
+            'page' => $data['page'],
+            'list' => $data['data']
+        ));
+    }
+
+    public function rest_put_commonCodes()
+    {
+        $qCommonCode = new Tblmapper('COMMON_CODE_M');
+        $qCommonCode->set_filter_column(array(
+            'GROUP_CD' => 'groupCd',
+            'GROUP_NM' => 'groupNm',
+            'CODE' => 'code',
+            'NAME' => 'name',
+            'SORT' => 'sort'
+        ));
+
+        $put_data = $this->get_req();
+
+        if(!empty($put_data)) {
+            foreach ($put_data as $idx => $row) {
+                if (is_int($idx) && is_array($row) && !empty($row)) {
+                    if (isset($row['__deleted__']) && $row['__deleted__'] == true) {
+                        if (isset($row['id']) && !empty($row['id'])) {
+                            $where = $qCommonCode->get_filter_where($row['id']);
+                            $qCommonCode->where($where)->delete();
+                        }
+                    } elseif (isset($row['__created__']) && $row['__created__'] == true && !isset($row['id'])) {
+                        $insert_data = $qCommonCode->get_filter_data($row);
+                        $qCommonCode->insert($insert_data);
+                    } elseif (isset($row['__modified__']) && $row['__modified__'] == true && isset($row['id'])) {
+                        $where = $qCommonCode->get_filter_where($row['id']);
+                        $update_data = $qCommonCode->get_filter_data($row);
+                        $qCommonCode->where($where)->update($update_data);
+                    }
+                }
+            }
         }
     }
 

@@ -3,8 +3,8 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     PAGE_SEARCH: function (caller, act, data) {
         axboot.ajax({
             type: "GET",
-            url: "/api/v1/commonCodes",
-            data: this.searchView.getData(),
+            url: ["commonCodes"],
+            data: caller.searchView.getData(),
             callback: function (res) {
                 caller.gridView01.setData(res);
             }
@@ -12,12 +12,12 @@ var ACTIONS = axboot.actionExtend(fnObj, {
         return false;
     },
     PAGE_SAVE: function (caller, act, data) {
-        var saveList = [].concat(this.gridView01.getData("modified"));
-        saveList = saveList.concat(this.gridView01.getData("deleted"));
+        var saveList = [].concat(caller.gridView01.getData("modified"));
+        saveList = saveList.concat(caller.gridView01.getData("deleted"));
 
         axboot.ajax({
             type: "PUT",
-            url: "/api/v1/commonCodes",
+            url: ["commonCodes"],
             data: JSON.stringify(saveList),
             callback: function (res) {
                 ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
@@ -26,10 +26,10 @@ var ACTIONS = axboot.actionExtend(fnObj, {
         });
     },
     ITEM_ADD: function (caller, act, data) {
-        this.gridView01.addRow();
+        caller.gridView01.addRow();
     },
     ITEM_DEL: function (caller, act, data) {
-        this.gridView01.delRow("selected");
+        caller.gridView01.delRow("selected");
     },
     dispatch: function (caller, act, data) {
         var result = ACTIONS.exec(caller, act, data);
@@ -58,33 +58,14 @@ fnObj.pageResize = function () {
 
 fnObj.pageButtonView = axboot.viewExtend({
     initView: function () {
-        var _this = this;
-        $('[data-page-btn]').click(function () {
-            _this.onClick(this.getAttribute("data-page-btn"));
-        });
-    },
-    onClick: function (_act) {
-        var _root = fnObj;
-        switch (_act) {
-            case "search":
+        axboot.buttonClick(this, "data-page-btn", {
+            "search": function () {
                 ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
-                break;
-            case "save":
+            },
+            "save": function () {
                 ACTIONS.dispatch(ACTIONS.PAGE_SAVE);
-                break;
-            case "excel":
-                break;
-            case "fn1":
-                break;
-            case "fn2":
-                break;
-            case "fn3":
-                break;
-            case "fn4":
-                break;
-            case "fn5":
-                break;
-        }
+            }
+        });
     }
 });
 
@@ -113,24 +94,12 @@ fnObj.searchView = axboot.viewExtend(axboot.searchView, {
  */
 fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
     initView: function () {
-
-        $('[data-grid-view-01-btn]').click(function () {
-            var _act = this.getAttribute("data-grid-view-01-btn");
-            switch (_act) {
-                case "add":
-                    ACTIONS.dispatch(ACTIONS.ITEM_ADD);
-                    break;
-                case "delete":
-                    ACTIONS.dispatch(ACTIONS.ITEM_DEL);
-                    break;
-            }
-        });
-
         var _this = this;
         this.target = axboot.gridBuilder({
             showRowSelector: true,
             frozenColumnIndex: 0,
             sortable: true,
+            multipleSelect: true,
             target: $('[data-ax5grid="grid-view-01"]'),
             columns: [
                 {key: "groupCd", label: "분류코드", width: 250, align: "center", editor: {type: "text", disabled: "notCreated"}},
@@ -147,8 +116,17 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
             ],
             body: {
                 onClick: function () {
-                    // this.self.select(this.dindex);
+                    this.self.select(this.dindex, {selectedClear: true});
                 }
+            }
+        });
+
+        axboot.buttonClick(this, "data-grid-view-01-btn", {
+            "add": function () {
+                ACTIONS.dispatch(ACTIONS.ITEM_ADD);
+            },
+            "delete": function () {
+                ACTIONS.dispatch(ACTIONS.ITEM_DEL);
             }
         });
     },

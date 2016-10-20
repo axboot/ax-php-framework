@@ -22,6 +22,7 @@ class Tblmapper {
     protected $_paging_header;
     protected $_alias = null;
     protected $_select_table = '';
+    protected $_filter_column;
     protected $db;
     protected $last_query;
     protected $soft_delete = false;
@@ -36,6 +37,7 @@ class Tblmapper {
         $this->CI = &get_instance();
         $this->db = $this->CI->db;
         $this->table = $table;
+        $this->_filter_column = array();
         $this->init();
         $this->_paging_header = array();
     }
@@ -66,6 +68,58 @@ class Tblmapper {
     {
         $this->_select_table = $select_table;
         
+        return $this;
+    }
+
+    public function set_filter_column($column)
+    {
+        if(is_array($column)) {
+            $this->_filter_column = array_merge($this->_filter_column, $column);
+        } else {
+            $this->_filter_column[] = $column;
+        }
+
+        return $this;
+    }
+
+    public function get_filter_data($org_data)
+    {
+        $data = array();
+
+        foreach($this->_filter_column as $column => $alias) {
+            if(is_int($column) && isset($org_data[$alias])) {
+                $data[$alias] = $org_data[$alias];
+            } elseif(isset($org_data[$alias])) {
+                $data[$column] = $org_data[$alias];
+            } elseif(isset($org_data[$column])) {
+                $data[$column] = $org_data[$column];
+            }
+        }
+
+        return $data;
+    }
+
+    public function get_filter_where($id)
+    {
+        $where = false;
+
+        if(is_array($id) && !empty($id)) {
+            $where = $this->get_filter_data($id);
+        }
+
+        return $where;
+    }
+
+    public function set_filter($filter)
+    {
+        if($filter != '') {
+            foreach ($this->_filter_column as $column => $alias) {
+                $where[] = sprintf("%s LIKE %s", $this->db->protect_identifiers((is_int($column) ? $alias : $column)), $this->escape('%' . $filter . '%'));
+            }
+
+            $this->where('(' . implode('OR', $where) . ')', null, false);
+        }
+
         return $this;
     }
 
@@ -400,6 +454,25 @@ class Tblmapper {
         );
     }
 
+    public function get_ax5_page()
+    {
+        // http://demo.axboot.com/api/v1/commonCodes?pageNumber=0&pageSize=99999&filter=
+        $pageNumber = intval($this->CI->input->get('pageNumber'));
+        $pageSize = intval($this->CI->input->get('pageSize'));
+
+        $pageNumber = $pageNumber < 0 ? 1 : $pageNumber + 1;
+
+        $rows = $this->get_pagination($pageNumber, $pageSize);
+        $rows["page"] = array(
+            "totalPages" => $rows['paging']['last_page'],
+            "totalElements" => $rows['paging']['total'],
+            "currentPage" => $rows['paging']['cur_page'],
+            "pageSize" => $rows['paging']['per_page']
+        );
+
+        return $rows;
+    }
+
     /**
      * protected method
      */
@@ -517,6 +590,14 @@ class Tblmapper {
         if(!empty($this->_select)) {
             foreach($this->_select as $r) {
                 $this->db->select($r['select'], $r['escape']);
+            }
+        } elseif(!empty($this->_filter_column)) {
+            foreach($this->_filter_column as $column => $alias) {
+                if(is_int($column)) {
+                    $this->db->select($alias);
+                } else {
+                    $this->db->select("{$column} AS {$alias}");
+                }
             }
         }
 

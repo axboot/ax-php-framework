@@ -1,10 +1,15 @@
 var fnObj = {};
 var ACTIONS = axboot.actionExtend(fnObj, {
     PAGE_SEARCH: function (caller, act, data) {
+
+        if (data && data.page) {
+            caller.searchView.setPageNumber(data.page.pageNumber);
+        }
+
         axboot.ajax({
             type: "GET",
-            url: "/api/v1/errorLogs",
-            data: this.searchView.getData(),
+            url: ["errorLogs"],
+            data: caller.searchView.getData(),
             callback: function (res) {
                 caller.gridView01.setData(res);
             }
@@ -12,12 +17,12 @@ var ACTIONS = axboot.actionExtend(fnObj, {
         return false;
     },
     PAGE_SAVE: function (caller, act, data) {
-        var saveList = [].concat(this.gridView01.getData("modified"));
-        saveList = saveList.concat(this.gridView01.getData("deleted"));
+        var saveList = [].concat(caller.gridView01.getData("modified"));
+        saveList = saveList.concat(caller.gridView01.getData("deleted"));
 
         axboot.ajax({
             type: "PUT",
-            url: "/api/v1/programs",
+            url: ["errorLogs"],
             data: JSON.stringify(saveList),
             callback: function (res) {
                 ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
@@ -26,10 +31,10 @@ var ACTIONS = axboot.actionExtend(fnObj, {
         });
     },
     ITEM_CLICK: function (caller, act, data) {
-        this.formView01.setData(data);
+        caller.formView01.setData(data);
     },
     ITEM_REMOVE: function (caller, act, data) {
-        var delete_queue = this.gridView01.getData("selected");
+        var delete_queue = caller.gridView01.getData("selected");
         if (delete_queue.length == 0) {
             alert("삭제할 목록을 선택해주세요");
             return;
@@ -41,7 +46,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
             if (pars = delete_queue.shift()) {
                 axboot.ajax({
                     type: "DELETE",
-                    url: "/api/v1/errorLogs/" + pars.id,
+                    url: ["errorLogs", pars.id],
                     data: "",
                     callback: function (res) {
                         delQueue();
@@ -65,7 +70,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
         if (!confirm("정말 삭제하시겠습니까?")) return;
         axboot.ajax({
             type: "DELETE",
-            url: "/api/v1/errorLogs/events/all",
+            url: ["errorLogs", "events/all"],
             data: "",
             callback: function (res) {
                 axToast.push("삭제 처리 되었습니다.");
@@ -101,33 +106,14 @@ fnObj.pageResize = function () {
 
 fnObj.pageButtonView = axboot.viewExtend({
     initView: function () {
-        var _this = this;
-        $('[data-page-btn]').click(function () {
-            _this.onClick(this.getAttribute("data-page-btn"));
-        });
-    },
-    onClick: function (_act) {
-        var _root = fnObj;
-        switch (_act) {
-            case "search":
+        axboot.buttonClick(this, "data-page-btn", {
+            "search": function () {
                 ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
-                break;
-            case "save":
+            },
+            "save": function () {
                 ACTIONS.dispatch(ACTIONS.PAGE_SAVE);
-                break;
-            case "excel":
-                break;
-            case "fn1":
-                break;
-            case "fn2":
-                break;
-            case "fn3":
-                break;
-            case "fn4":
-                break;
-            case "fn5":
-                break;
-        }
+            }
+        });
     }
 });
 
@@ -144,7 +130,7 @@ fnObj.searchView = axboot.viewExtend(axboot.searchView, {
     getData: function () {
         return {
             pageNumber: this.pageNumber,
-            pageSize: this.pageSize,
+            pageSize: 10, //this.pageSize,
             filter: this.filter.val(),
             sort: "id,desc"
         }
@@ -158,19 +144,6 @@ fnObj.searchView = axboot.viewExtend(axboot.searchView, {
 fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
     initView: function () {
         var _this = this;
-
-        $('[data-grid-view-01-btn]').click(function () {
-            var _act = this.getAttribute("data-grid-view-01-btn");
-            switch (_act) {
-                case "remove":
-                    ACTIONS.dispatch(ACTIONS.ITEM_REMOVE);
-                    break;
-                case "removeAll":
-                    ACTIONS.dispatch(ACTIONS.ITEM_REMOVEALL);
-                    break;
-            }
-        });
-
         this.target = axboot.gridBuilder({
             showRowSelector: true,
             frozenColumnIndex: 0,
@@ -195,6 +168,18 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
                     this.self.select(this.dindex);
                     ACTIONS.dispatch(ACTIONS.ITEM_CLICK, this.list[this.dindex]);
                 }
+            },
+            onPageChange: function (pageNumber) {
+                ACTIONS.dispatch(ACTIONS.PAGE_SEARCH, {page: {pageNumber: pageNumber}});
+            }
+        });
+
+        axboot.buttonClick(this, "data-grid-view-01-btn", {
+            "remove": function () {
+                ACTIONS.dispatch(ACTIONS.ITEM_REMOVE);
+            },
+            "removeAll": function () {
+                ACTIONS.dispatch(ACTIONS.ITEM_REMOVEALL);
             }
         });
     },

@@ -1,11 +1,11 @@
 var fnObj = {};
 var ACTIONS = axboot.actionExtend(fnObj, {
     PAGE_SEARCH: function (caller, act, data) {
-        var searchData = this.searchView.getData();
+        var searchData = caller.searchView.getData();
         axboot.ajax({
             type: "GET",
-            url: "/api/v2/menu",
-            data: this.searchView.getData(),
+            url: ["menu"],
+            data: caller.searchView.getData(),
             callback: function (res) {
                 caller.treeView01.setData(searchData, res.list);
             }
@@ -15,12 +15,12 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     },
     PAGE_SAVE: function (caller, act, data) {
         var obj = {
-            list: this.treeView01.getData(),
-            deletedList: this.treeView01.getDeletedList()
+            list: caller.treeView01.getData(),
+            deletedList: caller.treeView01.getDeletedList()
         };
         axboot.ajax({
             type: "PUT",
-            url: "/api/v2/menu",
+            url: ["menu"],
             data: JSON.stringify(obj),
             callback: function (res) {
                 caller.treeView01.clearDeletedList();
@@ -38,12 +38,12 @@ var ACTIONS = axboot.actionExtend(fnObj, {
 
         } else {
 
-            var formData = this.formView01.getData();
+            var formData = caller.formView01.getData();
             if (formData.progCd) {
                 axboot.ajax({
                     type: "PUT",
-                    url: "/api/v2/menu/auth",
-                    data: JSON.stringify(this.gridView01.getData()),
+                    url: ["menu", "auth"],
+                    data: JSON.stringify(caller.gridView01.getData()),
                     callback: function (res) {
                         axToast.push("메뉴 권한그룹 정보가 저장 되었습니다");
                         ACTIONS.dispatch(ACTIONS.SEARCH_AUTH, {menuId: caller.formView01.getData().menuId});
@@ -56,34 +56,35 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     },
     TREEITEM_CLICK: function (caller, act, data) {
         if (typeof data.menuId === "undefined") {
-            this.formView01.clear();
+            caller.formView01.clear();
             if (confirm("신규 생성된 메뉴는 저장 후 편집 할수 있습니다. 지금 저장 하시겠습니까?")) {
                 ACTIONS.dispatch(ACTIONS.PAGE_SAVE);
             }
             return;
         }
 
-        this.formView01.setData(data);
+        caller.formView01.setData(data);
     },
     TREEITEM_DESELECTE: function (caller, act, data) {
-        this.formView01.clear();
+        caller.formView01.clear();
     },
     TREE_ROOTNODE_ADD: function (caller, act, data) {
-        this.treeView01.addRootNode();
+        caller.treeView01.addRootNode();
     },
     SELECT_PROG: function (caller, act, data) {
-        this.treeView01.updateNode(data);
+        caller.treeView01.updateNode(data);
 
-        var _data = this.formView01.getData();
+        var _data = caller.formView01.getData();
         var obj = {
-            list: this.treeView01.getData(),
-            deletedList: this.treeView01.getDeletedList()
+            list: caller.treeView01.getData(),
+            deletedList: caller.treeView01.getDeletedList()
         };
+        var searchData = caller.searchView.getData();
 
         axboot
             .call({
                 type: "PUT",
-                url: "/api/v2/menu",
+                url: ["menu"],
                 data: JSON.stringify(obj),
                 callback: function (res) {
                     caller.treeView01.clearDeletedList();
@@ -92,8 +93,8 @@ var ACTIONS = axboot.actionExtend(fnObj, {
             })
             .call({
                 type: "GET",
-                url: "/api/v2/menu",
-                data: this.searchView.getData(),
+                url: ["menu"],
+                data: searchData,
                 callback: function (res) {
                     caller.treeView01.setData(searchData, res.list);
                 }
@@ -106,7 +107,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
     SEARCH_AUTH: function (caller, act, data) {
         axboot.ajax({
             type: "GET",
-            url: "/api/v2/menu/auth",
+            url: ["menu", "auth"],
             data: data,
             callback: function (res) {
                 var list = [];
@@ -166,7 +167,7 @@ var ACTIONS = axboot.actionExtend(fnObj, {
         });
     },
     MENU_AUTH_CLEAR: function (caller, act, data) {
-        this.gridView01.clear();
+        caller.gridView01.clear();
     },
     dispatch: function (caller, act, data) {
         var result = ACTIONS.exec(caller, act, data);
@@ -199,9 +200,6 @@ fnObj.pageStart = function () {
                 });
                 this.programList = programList;
             }
-        })
-        .call(function () {
-            this.something = 1;
         })
         .call({
             type: "GET", url: "/api/v1/commonCodes", data: {groupCd: "AUTH_GROUP", useYn: "Y"},
@@ -237,33 +235,17 @@ fnObj.pageResize = function () {
 
 fnObj.pageButtonView = axboot.viewExtend({
     initView: function () {
-        var _this = this;
-        $('[data-page-btn]').click(function () {
-            _this.onClick(this.getAttribute("data-page-btn"));
-        });
-    },
-    onClick: function (_act) {
-        var _root = fnObj;
-        switch (_act) {
-            case "search":
+        axboot.buttonClick(this, "data-page-btn", {
+            "search": function () {
                 ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
-                break;
-            case "save":
+            },
+            "save": function () {
                 ACTIONS.dispatch(ACTIONS.PAGE_SAVE);
-                break;
-            case "excel":
-                break;
-            case "fn1":
-                break;
-            case "fn2":
-                break;
-            case "fn3":
-                break;
-            case "fn4":
-                break;
-            case "fn5":
-                break;
-        }
+            },
+            "excel": function () {
+
+            }
+        });
     }
 });
 
@@ -473,17 +455,34 @@ fnObj.formView01 = axboot.viewExtend(axboot.formView, {
 
         this.initEvent();
 
-        $('[data-form-view-01-btn]').click(function () {
-            var _root = fnObj;
-            switch (this.getAttribute("data-form-view-01-btn")) {
-                case "form-clear":
-                    ACTIONS.dispatch(ACTIONS.FORM_CLEAR);
-                    break;
+        axboot.buttonClick(this, "data-form-view-01-btn", {
+            "form-clear": function () {
+                ACTIONS.dispatch(ACTIONS.FORM_CLEAR);
             }
         });
 
         this.combobox = $('[data-ax5combobox]').ax5combobox({
             options: this.programList,
+            onExpand: function (callBack) {
+                axboot
+                    .ajax({
+                        type: "GET", url: "/api/v1/programs", data: "",
+                        callback: function (res) {
+                            var programList = [];
+                            res.list.forEach(function (n) {
+                                programList.push({
+                                    value: n.progCd, text: n.progNm + "(" + n.progCd + ")",
+                                    progCd: n.progCd, progNm: n.progNm,
+                                    data: n
+                                });
+                            });
+                            _this.programList = programList;
+                            callBack({
+                                options: programList
+                            });
+                        }, options: {nomask: true}
+                    });
+            },
             onChange: function () {
                 if (this.value[0]) {
                     _this.model.set("progCd", this.value[0].progCd);
@@ -551,18 +550,6 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
     initView: function () {
         var _this = this;
 
-        $('[data-grid-view-01-btn]').click(function () {
-            var _act = this.getAttribute("data-grid-view-01-btn");
-            switch (_act) {
-                case "add":
-                    ACTIONS.dispatch(ACTIONS.ITEM_ADD);
-                    break;
-                case "delete":
-                    ACTIONS.dispatch(ACTIONS.ITEM_DEL);
-                    break;
-            }
-        });
-
         this.target = axboot.gridBuilder({
             showLineNumber: false,
             showRowSelector: false,
@@ -588,6 +575,15 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
                 onClick: function () {
                     // this.self.select(this.dindex);
                 }
+            }
+        });
+
+        axboot.buttonClick(this, "data-grid-view-01-btn", {
+            "add": function () {
+                ACTIONS.dispatch(ACTIONS.ITEM_ADD);
+            },
+            "delete": function () {
+                ACTIONS.dispatch(ACTIONS.ITEM_DEL);
             }
         });
     },

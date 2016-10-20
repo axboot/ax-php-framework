@@ -20,6 +20,7 @@
     </script>
     <script type="text/javascript" src="<?=ax('url', '/assets/js/plugins.min.js')?>"></script>
     <script type="text/javascript" src="<?=ax('url', '/assets/js/axboot/dist/axboot.js')?>"></script>
+    <script type="text/javascript" src="<?=ax('url', '/axboot.config.js')?>"></script>
     <?php foreach($this->_js as $_js): ?><?=$_js?><?php endforeach; ?>
 </head>
 <body class="ax-body <?=isset($axbody_class) ? $axbody_class : ''?>">
