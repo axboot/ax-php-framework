@@ -1,7 +1,7 @@
 # AX-PHP Framework
 
 ## What is AX-PHP Framework?
->AX5 UI Framework & PHP Codeignter Based Full Stack Development Framework.
+>AX5 UI Framework & PHP Codeignter 3.x Based Full Stack Development Framework.
 
 ## Features
 - Pre Configuration Spring Boot with Optimized Configuration
@@ -20,10 +20,11 @@
 - Apache 2.2.26+
 
 ## How to Start
-- 1) Setup Database
-- 2) import db/ax5-php.sql
-- 3) Access to http://your-domain
-- 4) then, you can login with ID(system) / Password(1234)
+- 1) Open index.php
+- 2) Setup Database and Web Environment
+- 3) import db/ax5-php.sql
+- 4) Access to http://your-domain
+- 5) then, you can login with ID(system) / Password(1234)
 
 ## Ref
 - Official Site : http://www.axboot.com
