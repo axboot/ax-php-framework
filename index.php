@@ -19,14 +19,7 @@
 
 define('AX_PHP_BOOT', '1.0');
 
-define('ENVIRONMENT', isset($axServerList[$_SERVER['HTTP_HOST']]['env']) ? $axServerList[$_SERVER['HTTP_HOST']]['env'] : 'production');
-define('AXBASEURL', isset($axServerList[$_SERVER['HTTP_HOST']]['baseurl']) ? $axServerList[$_SERVER['HTTP_HOST']]['baseurl'] : 'http://' . $_SERVER['HTTP_HOST']);
-define('AXINDEXPAGE', isset($axServerList[$_SERVER['HTTP_HOST']]['index_page']) ? $axServerList[$_SERVER['HTTP_HOST']]['index_page'] : 'index.php');
-define('AXDBDRIVER', isset($axServerList[$_SERVER['HTTP_HOST']]['db']['dbdriver']) ? $axServerList[$_SERVER['HTTP_HOST']]['db']['dbdriver'] : 'mysqli');
-define('AXDBHOST', isset($axServerList[$_SERVER['HTTP_HOST']]['db']['hostname']) ? $axServerList[$_SERVER['HTTP_HOST']]['db']['hostname'] : 'localhost');
-define('AXDATABASE', isset($axServerList[$_SERVER['HTTP_HOST']]['db']['database']) ? $axServerList[$_SERVER['HTTP_HOST']]['db']['database'] : '');
-define('AXDBUSER', isset($axServerList[$_SERVER['HTTP_HOST']]['db']['username']) ? $axServerList[$_SERVER['HTTP_HOST']]['db']['username'] : '');
-define('AXDBPASSWORD', isset($axServerList[$_SERVER['HTTP_HOST']]['db']['password']) ? $axServerList[$_SERVER['HTTP_HOST']]['db']['password'] : '');
+include_once '_core/siteconfig.php';
 
 /**
  * CodeIgniter

@@ -3,7 +3,7 @@
 /**
  * Description of Api
  *
- * @author ncode
+ * @author hoksi3k@gmail.com
  */
 class Api extends CI_Controller {
     protected $resource;

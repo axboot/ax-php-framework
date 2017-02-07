@@ -31,7 +31,7 @@ class MY_Loader extends CI_Loader
 
             $this->ci->output->set_content_type('json')->set_output(json_encode($vars));
         } else {
-            $content = $this->_ci_load(array('_ci_view' => $view, '_ci_vars' => $this->_ci_object_to_array($vars), '_ci_return' => true));
+            $content = $this->_ci_load(array('_ci_view' => $view, '_ci_vars' => $this->_ci_prepare_view_vars($vars), '_ci_return' => true));
             if($this->_layout == NULL) {
                 if($return) {
                     return $content;
@@ -43,7 +43,7 @@ class MY_Loader extends CI_Loader
                 $this->_layout = NULL;
                 $this->vars('__view_content__', $content);
 
-                return $this->_ci_load(array('_ci_view' => '_common/layout/' . $layout, '_ci_vars' => $this->_ci_object_to_array($vars), '_ci_return' => $return));
+                return $this->_ci_load(array('_ci_view' => '_common/layout/' . $layout, '_ci_vars' => $this->_ci_prepare_view_vars($vars), '_ci_return' => $return));
             }
         }
     }

@@ -206,3 +206,90 @@ class Mapi_Model extends Api_Model {
         }
     }
 }
+
+class RESTAPI_Model extends CI_Model {
+    protected $reqData;
+    public $errorMessage;
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    // HTTP method GET function use id
+    public function restGet($id = null)
+    {
+        if ($id === null) {
+            return $this->restList();
+        }
+
+        return $id;
+    }
+
+
+    // HTTP method GET function not use id
+    public function restList()
+    {
+        return [];
+    }
+
+    //
+    public function restPost()
+    {
+        return null;
+    }
+
+    public function restPut($id = null)
+    {
+        return $id;
+    }
+
+    public function restDelete($id = null)
+    {
+        return $id;
+    }
+
+    public function setReqData($reqData)
+    {
+        $this->request = $reqData;
+        return $this;
+    }
+
+    public function getReqData()
+    {
+        return $this->request;
+    }
+
+    public function formValid($request, $data)
+    {
+        //validation
+        if (empty($request) || empty($data)) {
+            return false;
+        }
+
+        foreach ($request as $val) {
+            $this->form_validation->set_rules($val, $val, "required");
+        }
+
+        if ($this->form_validation->set_data($data)->run() === FALSE) {
+            // error_message는 개발환경과 QA 환경에서만 노출 시킴
+            if (ENVIRONMENT !== "production") {
+                $this->errorMessage = $this->form_validation->error_array();
+            }
+
+            return false;
+        }
+
+        return true;
+    }
+
+    public function json2array($data) {
+        if (is_array($data)) {
+            return $data;
+        } else {
+            $array = json_decode($data, true);
+            return json_last_error() === JSON_ERROR_NONE ? $array : [];
+        }
+    }
+
+}

@@ -53,46 +53,6 @@
         ]
     },
     {
-        "name": "chriskacerguis/codeigniter-restserver",
-        "version": "3.0.0",
-        "version_normalized": "3.0.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/chriskacerguis/codeigniter-restserver.git",
-            "reference": "ee06e378d50ff28bfeba88c554bf2ae5c65907ce"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/chriskacerguis/codeigniter-restserver/zipball/ee06e378d50ff28bfeba88c554bf2ae5c65907ce",
-            "reference": "ee06e378d50ff28bfeba88c554bf2ae5c65907ce",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.4.0"
-        },
-        "time": "2017-01-01 02:27:48",
-        "type": "project",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "application/libraries/Format.php",
-                "application/libraries/REST_Controller.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Chris Kacerguis",
-                "role": "Developer"
-            }
-        ],
-        "description": "REST Server for the CodeIgniter framework",
-        "homepage": "https://github.com/chriskacerguis/codeigniter-restserver"
-    },
-    {
         "name": "codeigniter/framework",
         "version": "3.1.3",
         "version_normalized": "3.1.3.0",
