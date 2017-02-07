@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>DB Driver Reference &mdash; CodeIgniter 3.1.0 documentation</title>
+  <title>DB Driver Reference &mdash; CodeIgniter 3.1.3 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="CodeIgniter 3.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="CodeIgniter 3.1.3 documentation" href="../index.html"/>
         <link rel="up" title="Database Reference" href="index.html"/>
         <link rel="next" title="Helpers" href="../helpers/index.html"/>
         <link rel="prev" title="Database Utility Class" href="utilities.html"/> 
@@ -1395,11 +1395,11 @@ and applies the configured <em>dbprefix</em> to it.</p>
 <p>Some logic is necessary in order to deal with
 column names that include the path.</p>
 <p>Consider a query like this:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span class="nx">SELECT</span> <span class="o">*</span> <span class="nx">FROM</span> <span class="nx">hostname</span><span class="o">.</span><span class="nx">database</span><span class="o">.</span><span class="nx">table</span><span class="o">.</span><span class="nx">column</span> <span class="k">AS</span> <span class="nx">c</span> <span class="nx">FROM</span> <span class="nx">hostname</span><span class="o">.</span><span class="nx">database</span><span class="o">.</span><span class="nx">table</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">SELECT</span> <span class="o">*</span> <span class="nx">FROM</span> <span class="nx">hostname</span><span class="o">.</span><span class="nx">database</span><span class="o">.</span><span class="nx">table</span><span class="o">.</span><span class="nx">column</span> <span class="k">AS</span> <span class="nx">c</span> <span class="nx">FROM</span> <span class="nx">hostname</span><span class="o">.</span><span class="nx">database</span><span class="o">.</span><span class="nx">table</span>
 </pre></div>
 </div>
 <p>Or a query with aliasing:</p>
-<div class="highlight-ci"><div class="highlight"><pre><span class="nx">SELECT</span> <span class="nx">m</span><span class="o">.</span><span class="nx">member_id</span><span class="p">,</span> <span class="nx">m</span><span class="o">.</span><span class="nx">member_name</span> <span class="nx">FROM</span> <span class="nx">members</span> <span class="k">AS</span> <span class="nx">m</span>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">SELECT</span> <span class="nx">m</span><span class="o">.</span><span class="nx">member_id</span><span class="p">,</span> <span class="nx">m</span><span class="o">.</span><span class="nx">member_name</span> <span class="nx">FROM</span> <span class="nx">members</span> <span class="k">AS</span> <span class="nx">m</span>
 </pre></div>
 </div>
 <p>Since the column name can include up to four segments
@@ -1432,8 +1432,8 @@ position, and escape only the correct identifiers.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014 - 2016, British Columbia Institute of Technology.
-      Last updated on Jul 26, 2016.
+        &copy; Copyright 2014 - 2017, British Columbia Institute of Technology.
+      Last updated on Jan 09, 2017.
     </p>
   </div>
 
@@ -1454,7 +1454,7 @@ position, and escape only the correct identifiers.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'3.1.0',
+            VERSION:'3.1.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false

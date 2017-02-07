@@ -6,4 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Format' => $vendorDir . '/chriskacerguis/codeigniter-restserver/application/libraries/Format.php',
+    'Restserver\\Libraries\\REST_Controller' => $vendorDir . '/chriskacerguis/codeigniter-restserver/application/libraries/REST_Controller.php',
 );
