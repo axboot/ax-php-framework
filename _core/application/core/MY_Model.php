@@ -255,9 +255,9 @@ class RESTAPI_Model extends CI_Model {
         return $this;
     }
 
-    public function getReqData()
+    public function getReqData($key = null)
     {
-        return $this->request;
+        return ($key === null ? $this->request : (isset($this->request[$key]) ? $this->request[$key] : false));
     }
 
     public function formValid($request, $data)
@@ -291,5 +291,4 @@ class RESTAPI_Model extends CI_Model {
             return json_last_error() === JSON_ERROR_NONE ? $array : [];
         }
     }
-
 }

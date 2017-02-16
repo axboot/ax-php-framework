@@ -59,7 +59,7 @@
             login: function () {
                 axboot.ajax({
                     method: "POST",
-                    url: "<?=ax('siteUrl', '/api/login')?>",
+                    url: "<?=ax('siteUrl', '/api2/login')?>",
                     data: JSON.stringify({
                         "userCd": $("#userCd").val(),
                         "userPs": $("#userPs").val()

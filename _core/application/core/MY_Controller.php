@@ -19,17 +19,10 @@ class MY_Controller extends CI_Controller {
     public function __construct() {
         parent::__construct();
 
-        $this->auth_group_menu = array(
-            'schAh' => 'N', // 조회
-            'savAh' => 'N', // 저장
-            'exlAh' => 'N', // 엑셀
-            'delAh' => 'N', // 삭제
-            'fn1Ah' => 'N', // 기능1
-            'fn2Ah' => 'N', // 기능2
-            'fn3Ah' => 'N', // 기능3
-            'fn4Ah' => 'N', // 기능4
-            'fn5Ah' => 'N', // 기능5
-        );
+        // Mockup model Load
+        $this->load->model('mock/ax5mock');
+
+        $this->auth_group_menu = $this->ax5mock->get_auth_group_menu();
     }
 }
 
@@ -64,21 +57,19 @@ class Admin_Controller extends MY_Controller {
 
 // Rest API 컨트롤러
 class RESTAPI_Controller extends \Restserver\Libraries\REST_Controller {
-    protected $version = 'v1';
+    protected $version = 'runApiModel';
 
     /** @var RESTAPI_Model $_api_model_ */
     public $_api_model_ = null;
 
     public function __construct($config = 'rest') {
         parent::__construct($config);
+
+        // Mockup model Load
+        $this->load->model('mock/ax5mock');
     }
 
     public function _remap($object_called, $arguments = array()) {
-
-        print_r($object_called);
-        echo '<br/>';
-        print_r($arguments);
-
         // Should we answer if not over SSL?
         if ($this->config->item('force_https') && $this->request->ssl === FALSE)
         {
@@ -88,19 +79,37 @@ class RESTAPI_Controller extends \Restserver\Libraries\REST_Controller {
             ], self::HTTP_FORBIDDEN);
         }
 
-        $object_called = array_shift($arguments);
+        // API 호출 URL을 분석한다.
+        if(method_exists($this, $object_called)) {
+            // 버젼정보 변경
+            $this->version = $object_called;
+            // 모델파일 변경
+            $object_called = array_shift($arguments);
 
-        // Remove the supported format from the function name e.g. index.json => index
-        $object_called = strtolower(preg_replace('/^(.*)\.(?:'.implode('|', array_keys($this->_supported_formats)).')$/', '$1', $object_called) . '_model');
+            // Remove the supported format from the function name e.g. index.json => index
+            $object_called = strtolower(preg_replace('/^(.*)\.(?:' . implode('|', array_keys($this->_supported_formats)) . ')$/', '$1', $object_called) . '_m');
+            $model_file = ucfirst($object_called);
+            $controller_method = $object_called . '_' . $this->request->method;
 
-        $model_file = ucfirst($object_called);
-        $controller_method = $object_called.'_'.$this->request->method;
+            $class_name = ($this->router->directory ? $this->router->directory . '/' . $this->router->class : $this->router->class);
 
-        $class_name = $this->router->directory ? $this->router->directory . '/' . $this->router->class : $this->router->class;
+            // API와 연결된 모델파일이 있는지 확인한다.
+            if (file_exists(APPPATH . 'models/' . $class_name . '/' . $this->version . '/' . $model_file . '.php')) {
+                $this->load->model($class_name . '/' . $this->version . '/' . $object_called, '_api_model_');
+            }
+        } else {
+            // Remove the supported format from the function name e.g. index.json => index
+            $object_called = strtolower(preg_replace('/^(.*)\.(?:' . implode('|', array_keys($this->_supported_formats)) . ')$/', '$1', $object_called) . '_m');
+            $model_file = ucfirst($object_called);
+            $controller_method = $object_called . '_' . $this->request->method;
 
-        // API와 연결된 모델파일이 있는지 확인한다.
-        if(file_exists(APPPATH . 'models/' . $class_name . '/' . $this->version . '/' . $model_file . '.php')) {
-            $this->load->model($class_name . '/' . $this->version . '/' . $object_called, '_api_model_');
+            $class_name = ($this->router->directory ? $this->router->directory . '/' . $this->router->class : $this->router->class);
+
+            // API와 연결된 모델파일이 있는지 확인한다.
+            if (file_exists(APPPATH . 'models/' . $class_name . '/' . $model_file . '.php')) {
+                $this->load->model($class_name . '/' . $object_called, '_api_model_');
+            }
+
         }
 
         // Do we want to log this method (if allowed by config)?
@@ -210,5 +219,55 @@ class RESTAPI_Controller extends \Restserver\Libraries\REST_Controller {
         $this->version = $version;
 
         return $this;
+    }
+
+    protected function runApiModel($method, $arguments = []) {
+        if (is_object($this->_api_model_)) {
+            // HTTP method별 request data를 모델에 매핑해줌
+            if (isset($this->request->body[0])) {
+                $this->_api_model_->setReqData($this->request->body[0]);
+            } else {
+                $this->_api_model_->setReqData($this->{$method}());
+            }
+
+            $method = 'rest' . ucfirst($method);
+
+            if (method_exists($this->_api_model_, $method)) {
+                $result = call_user_func_array([$this->_api_model_, $method], $arguments);
+
+                if ($result === FALSE) {
+                    $res = [
+                        $this->config->item('rest_status_field_name') => FALSE,
+                        $this->config->item('rest_message_field_name') => $this->_api_model_->errorMessage,
+                        'result' => null
+                    ];
+                } else {
+                    $res = [
+                        $this->config->item('rest_status_field_name') => TRUE,
+                        $this->config->item('rest_message_field_name') => '',
+                    ];
+
+                    if(is_array($result)) {
+                        $res = array_merge($res, $result);
+                    } else {
+                        $res['result'] = $result;
+                    }
+                }
+
+                $this->response($res);
+            } else {
+                $res = [
+                    $this->config->item('rest_status_field_name') => FALSE,
+                    $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_unknown_model_method')
+                ];
+
+                $this->response($res, self::HTTP_METHOD_NOT_ALLOWED);
+            }
+        } else {
+            $this->response([
+                $this->config->item('rest_status_field_name') => FALSE,
+                $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_not_defined_method')
+            ], self::HTTP_METHOD_NOT_ALLOWED);
+        }
     }
 }
