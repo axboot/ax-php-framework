@@ -8,7 +8,6 @@
 >AX5 UI Framework & PHP Codeignter 3.x Based Full Stack Development Framework.
 
 ## Features
-- Pre Configuration Spring Boot with Optimized Configuration
 - Prebuilt Utilities (Http, Cookie, Error, Etc..)
 - Prebuilt Administration Pack provided
     - Login, Session, Layout, UI
@@ -33,7 +32,6 @@
 
 ## Ref
 - Official Site : http://www.axboot.com
-- Demo Site : http://ax5-hoksi.cloud.or.kr/
 
 ## Documentation
 - API Documentation : http://api.axboot.com
