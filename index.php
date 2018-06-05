@@ -20,7 +20,7 @@
 define('AX_PHP_BOOT', '1.0');
 
 // 웹 사이트 도메인별 환경 설정 파일 include
-include_once '_core/siteconfig.php';
+include_once '_core/siteConfig.php';
 
 /**
  * CodeIgniter
